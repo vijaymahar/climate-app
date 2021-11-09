@@ -26,7 +26,8 @@ const Body = ({ totalData }) => {
   } = totalData;
 
   const [weatherIcon, setWeatherIcon] = useState("");
-
+  const [newTime, setNewTime] = useState("");
+  const [newDate, setNewDate] = useState("");
   const date = new Date(sunset * 1000);
   const time = date.toLocaleTimeString();
   const curDate = `${date.getHours()}:${date.getMinutes()}`;
@@ -56,6 +57,18 @@ const Body = ({ totalData }) => {
     }
   }, [weatherMood]);
 
+  const presentDate = new Date();
+  const curentDate = presentDate.toLocaleDateString();
+  const curentTime = presentDate.toLocaleTimeString();
+  const timeFunctuion = () => {
+    setInterval(() => {
+      setNewTime(curentTime);
+      setNewDate(curentDate);
+    }, 1000);
+  };
+  useEffect(() => {
+    timeFunctuion();
+  }, [newTime]);
   return (
     <>
       <Container className="mt-5" id="container">
@@ -80,11 +93,10 @@ const Body = ({ totalData }) => {
               </Row>
             </Col>
             <Col md={4} className="bg-teal">
-              <p>
-                {setInterval(() => {
-                  return new Date().toLocaleString();
-                }, 1000)}
-              </p>
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <p>{curentDate}</p>
+                <p>{newTime}</p>
+              </div>
             </Col>
           </Row>
 
